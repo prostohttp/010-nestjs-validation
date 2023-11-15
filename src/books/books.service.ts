@@ -36,7 +36,7 @@ export class BooksService {
 
   async getBook(id: string): Promise<BookDocument | RequestType> {
     try {
-      const book = await this.bookModel.findOne({ id: id });
+      const book = await this.bookModel.findById(id);
       if (book) {
         return book;
       } else {
