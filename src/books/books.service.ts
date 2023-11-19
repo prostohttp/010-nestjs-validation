@@ -51,7 +51,7 @@ export class BooksService {
 
   async delete(id: string): Promise<RequestType> {
     try {
-      const deletedBook = await this.bookModel.findOneAndDelete({ id: id });
+      const deletedBook = await this.bookModel.findByIdAndDelete(id);
       if (deletedBook) {
         return {
           success: true,
@@ -71,10 +71,11 @@ export class BooksService {
     updatedFields: Partial<CreateBookDto>,
   ): Promise<BookDocument | RequestType> {
     try {
-      const foundedBook = await this.bookModel.findOne({ id: id });
+      const foundedBook = await this.bookModel.findByIdAndUpdate(id);
       if (foundedBook) {
-        return this.bookModel.findOneAndUpdate({ id: id }, updatedFields, {
+        return this.bookModel.findByIdAndUpdate(id, updatedFields, {
           new: true,
+          runValidators: true,
         });
       } else {
         return {
